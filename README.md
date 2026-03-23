@@ -42,6 +42,374 @@ java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config.json
 
 ---
 
+## 💻 跨平台使用指南
+
+### Windows
+
+#### jpackage 版本（推薦，無需 Java）
+
+```powershell
+# 1. 下載並解壓縮 dist-jpackage-JPEG2PDF-OFD-NoSpring.zip
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 運行
+.\JPEG2PDF-OFD-NoSpring.exe config-multipage-false.json
+
+# 多頁模式
+.\JPEG2PDF-OFD-NoSpring.exe config-multipage-true.json
+```
+
+#### JAR 版本（需要 Java 17+）
+
+```powershell
+# 1. 安裝 Java 17+
+# 下載：https://adoptium.net/
+
+# 2. 驗證 Java
+java -version
+
+# 3. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+---
+
+### macOS
+
+#### jpackage 版本（推薦，無需 Java）
+
+```bash
+# 1. 下載並解壓縮 dist-jpackage-JPEG2PDF-OFD-NoSpring.tar.gz
+tar -xzf dist-jpackage-JPEG2PDF-OFD-NoSpring.tar.gz
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 添加執行權限
+chmod +x JPEG2PDF-OFD-NoSpring
+
+# 4. 運行
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+
+# 多頁模式
+./JPEG2PDF-OFD-NoSpring config-multipage-true.json
+```
+
+**注意：** 首次運行可能需要在"系統偏好設定 > 安全性與隱私"中允許執行。
+
+#### JAR 版本（需要 Java 17+）
+
+```bash
+# 1. 安裝 Java 17+
+# 使用 Homebrew
+brew install openjdk@17
+
+# 或下載：https://adoptium.net/
+
+# 2. 驗證 Java
+java -version
+
+# 3. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+---
+
+### Linux
+
+#### Ubuntu / Debian
+
+**jpackage 版本：**
+
+```bash
+# 1. 下載並解壓縮
+tar -xzf JPEG2PDF-OFD-NoSpring.tar.gz
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 添加執行權限
+chmod +x JPEG2PDF-OFD-NoSpring
+
+# 4. 運行
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**JAR 版本：**
+
+```bash
+# 1. 安裝 Java 17+
+sudo apt update
+sudo apt install openjdk-17-jdk
+
+# 2. 驗證
+java -version
+
+# 3. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+---
+
+#### CentOS / RHEL / Fedora
+
+**jpackage 版本：**
+
+```bash
+# 1. 下載並解壓縮
+tar -xzf JPEG2PDF-OFD-NoSpring.tar.gz
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 添加執行權限
+chmod +x JPEG2PDF-OFD-NoSpring
+
+# 4. 運行
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**JAR 版本：**
+
+```bash
+# 1. 安裝 Java 17+
+sudo yum install java-17-openjdk-devel
+# 或
+sudo dnf install java-17-openjdk-devel
+
+# 2. 驗證
+java -version
+
+# 3. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+---
+
+#### 統信 UOS（UnionTech OS）
+
+**系統特點：**
+- 基於 Deepin
+- 國產操作系統
+- 支持龍芯、鯤鵬、飛騰等國產 CPU
+
+**jpackage 版本：**
+
+```bash
+# 1. 下載並解壓縮
+tar -xzf JPEG2PDF-OFD-NoSpring.tar.gz
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 添加執行權限
+chmod +x JPEG2PDF-OFD-NoSpring
+
+# 4. 運行
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**JAR 版本：**
+
+```bash
+# 1. 檢查 Java 版本
+java -version
+
+# 如果沒有 Java 17+，安裝：
+sudo apt install openjdk-17-jdk
+
+# 2. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+**注意：** 
+- 統信 UOS 通常預裝 Java 環境
+- 如需安裝，可使用 UOS 應用商店或命令行
+
+---
+
+#### 麒麟 Kylin（銀河麒麟 / 中標麒麟）
+
+**系統特點：**
+- 國產操作系統
+- 支持多種國產 CPU（龍芯、申威、飛騰等）
+- 分為桌面版和服務器版
+
+**jpackage 版本：**
+
+```bash
+# 1. 下載並解壓縮
+tar -xzf JPEG2PDF-OFD-NoSpring.tar.gz
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 添加執行權限
+chmod +x JPEG2PDF-OFD-NoSpring
+
+# 4. 運行
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**JAR 版本：**
+
+```bash
+# 1. 檢查 Java 版本
+java -version
+
+# 如果沒有 Java 17+，安裝：
+# 麒麟系統通常使用 yum 或 apt
+sudo yum install java-17-openjdk-devel
+# 或
+sudo apt install openjdk-17-jdk
+
+# 2. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+**注意：**
+- 銀河麒麟 V10 可能使用不同的包管理器
+- 建議優先使用 jpackage 版本（無需安裝 Java）
+
+---
+
+#### 深度 Deepin
+
+**jpackage 版本：**
+
+```bash
+# 1. 下載並解壓縮
+tar -xzf JPEG2PDF-OFD-NoSpring.tar.gz
+
+# 2. 進入目錄
+cd JPEG2PDF-OFD-NoSpring
+
+# 3. 添加執行權限
+chmod +x JPEG2PDF-OFD-NoSpring
+
+# 4. 運行
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**JAR 版本：**
+
+```bash
+# 1. 安裝 Java 17+
+sudo apt update
+sudo apt install openjdk-17-jdk
+
+# 2. 驗證
+java -version
+
+# 3. 運行
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+---
+
+#### 其他國產 Linux 發行版
+
+對於其他國產 Linux 系統（如中標軟件 NeoKylin、中興新支點等）：
+
+**通用步驟：**
+
+```bash
+# 1. 檢查系統架構
+uname -m
+# x86_64 = Intel/AMD 64位
+# aarch64 = ARM 64位（鯤鵬、飛騰）
+# mips64 = 龍芯
+# sw_64 = 申威
+
+# 2. 下載對應架構的版本
+
+# 3. 使用 jpackage 版本（推薦）
+tar -xzf JPEG2PDF-OFD-NoSpring.tar.gz
+cd JPEG2PDF-OFD-NoSpring
+chmod +x JPEG2PDF-OFD-NoSpring
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+
+# 或使用 JAR 版本（需要 Java 17+）
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config-multipage-false.json
+```
+
+**國產 CPU 架構支持：**
+
+| CPU 架構 | 支持狀態 | 備註 |
+|---------|---------|------|
+| **x86_64** | ✅ 完全支持 | Intel/AMD 處理器 |
+| **aarch64** | ✅ 完全支持 | 鯤鵬、飛騰處理器 |
+| **mips64** | ⚠️ 需測試 | 龍芯處理器 |
+| **sw_64** | ⚠️ 需測試 | 申威處理器 |
+
+**注意：**
+- 國產 CPU 架構建議優先使用 JAR 版本
+- 需要對應架構的 JDK 17+
+- jpackage 版本可能需要重新構建
+
+---
+
+### Docker 支持（可選）
+
+**構建 Docker 映像：**
+
+```dockerfile
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY target/jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar /app/
+COPY config-multipage-false.json /app/
+
+ENTRYPOINT ["java", "-Xmx2G", "-jar", "jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar"]
+```
+
+**使用：**
+
+```bash
+# 構建映像
+docker build -t jpeg2pdf-ofd .
+
+# 運行
+docker run --rm \
+  -v /path/to/input:/input \
+  -v /path/to/output:/output \
+  jpeg2pdf-ofd \
+  -i /input \
+  -o /output \
+  -f all
+```
+
+---
+
+### 性能優化建議
+
+**內存設置：**
+
+```bash
+# 小圖片（< 2MP）
+java -Xmx1G -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 中等圖片（2-5MP）
+java -Xmx2G -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 大圖片（> 5MP）
+java -Xmx4G -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 批量處理
+java -Xmx4G -jar jpeg2pdf-ofd-nospring.jar config.json
+```
+
+**多核優化：**
+
+OCR 引擎會自動使用多核 CPU。確保：
+- 系統有足夠的 CPU 核心
+- 內存足夠（建議每核 512MB - 1GB）
+
+---
+
 ## 🔧 如何構建
 
 ### 系統需求
