@@ -58,6 +58,7 @@ public class Main {
             OcrService ocrService = new OcrService();
             PdfService pdfService = new PdfService(config);
             TextService textService = new TextService();
+            OfdService ofdService = new OfdService();
             
             // 獲取輸入配置
             Map<String, Object> inputConfig = (Map<String, Object>) configMap.get("input");
@@ -124,6 +125,12 @@ public class Main {
                         File txtFile = new File(outputDir, outputFilename + ".txt");
                         textService.generateTxt(textBlocks, txtFile);
                         System.out.println("  OK: TXT -> " + txtFile.getName());
+                    }
+                    
+                    if (format.contains("ofd") || format.contains("all")) {
+                        File ofdFile = new File(outputDir, outputFilename + ".ofd");
+                        ofdService.generateOfd(image, textBlocks, ofdFile);
+                        System.out.println("  OK: OFD -> " + ofdFile.getName());
                     }
                     
                     System.out.println();
