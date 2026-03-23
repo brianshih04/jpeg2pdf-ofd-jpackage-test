@@ -7,7 +7,6 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -159,13 +158,20 @@ public class PdfService {
         
         if (fontPath != null && new File(fontPath).exists()) {
             try {
+                // 優先使用 TTF 文件
+                if (fontPath.toLowerCase().endsWith(".ttf")) {
+                    return PDType0Font.load(document, new File(fontPath));
+                }
+                // TTC 文件嘗試加載（可能會失敗，但不影響功能）
+                System.err.println("    Warning: TTC font format may have issues, trying anyway: " + fontPath);
                 return PDType0Font.load(document, new File(fontPath));
             } catch (Exception e) {
-                System.err.println("    Warning: Cannot load font from " + fontPath);
+                System.err.println("    Warning: Cannot load font from " + fontPath + ": " + e.getMessage());
             }
         }
         
         // 使用默認字體
+        System.err.println("    Warning: Using default font HELVETICA (may not support Chinese)");
         return org.apache.pdfbox.pdmodel.font.PDType1Font.HELVETICA;
     }
 }
