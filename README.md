@@ -445,6 +445,8 @@ java -Xmx2G -jar target/jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar co
 
 ### 2️⃣ 構建 jpackage 版本（無需 Java）
 
+#### Windows
+
 **前置需求：**
 - JDK 17+ (包含 jpackage)
 - Maven 3.6+
@@ -475,6 +477,298 @@ dist-jpackage\JPEG2PDF-OFD-NoSpring\
 ├── runtime\                    (JRE runtime)
 └── config.json                 (配置文件)
 ```
+
+---
+
+#### macOS
+
+**前置需求：**
+- JDK 17+ (包含 jpackage)
+- Maven 3.6+
+- Xcode Command Line Tools
+
+**構建步驟：**
+
+```bash
+# 1. 安裝 JDK 17+
+# 使用 Homebrew
+brew install openjdk@17
+
+# 或下載 GraalVM
+# https://github.com/graalvm/graalvm-ce-builds/releases
+
+# 2. 設置 JAVA_HOME
+export JAVA_HOME=/usr/local/opt/openjdk@17
+export PATH=$JAVA_HOME/bin:$PATH
+
+# 3. 驗證
+java -version
+jpackage --version
+
+# 4. 構建 JAR
+mvn clean package -DskipTests
+
+# 5. 構建 jpackage
+mkdir -p jpackage-input
+cp target/jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar jpackage-input/
+
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type app-image \
+  --dest dist-jpackage \
+  --java-options -Xmx2G
+
+# 6. 添加配置文件
+cp config-multipage-false.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+cp config-multipage-true.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+
+# 輸出
+# dist-jpackage/JPEG2PDF-OFD-NoSpring/ (~180 MB)
+```
+
+**使用：**
+
+```bash
+cd dist-jpackage/JPEG2PDF-OFD-NoSpring
+chmod +x JPEG2PDF-OFD-NoSpring
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**創建 .app 應用程序（可選）：**
+
+```bash
+# 創建 macOS .app 應用程序
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type app-image \
+  --dest dist-jpackage \
+  --java-options -Xmx2G \
+  --mac-package-identifier com.ocr.jpeg2pdf \
+  --mac-package-name "JPEG2PDF OFD" \
+  --mac-package-signing-prefix com.ocr \
+  --icon icons/icon.icns  # 可選：自定義圖標
+```
+
+**文件結構：**
+
+```
+dist-jpackage/JPEG2PDF-OFD-NoSpring/
+├── JPEG2PDF-OFD-NoSpring (可執行文件)
+├── app/                   (應用程序)
+├── runtime/               (JRE runtime)
+├── config-multipage-false.json
+└── config-multipage-true.json
+```
+
+**注意：**
+- 首次運行可能需要在"系統偏好設定 > 安全性與隱私"中允許執行
+- 若要分發給其他用戶，需要進行代碼簽名
+
+---
+
+#### Linux (Ubuntu/Debian)
+
+**前置需求：**
+- JDK 17+ (包含 jpackage)
+- Maven 3.6+
+- build-essential (編譯工具)
+
+**構建步驟：**
+
+```bash
+# 1. 安裝依賴
+sudo apt update
+sudo apt install -y openjdk-17-jdk maven build-essential
+
+# 2. 設置 JAVA_HOME
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+
+# 3. 驗證
+java -version
+jpackage --version
+
+# 4. 構建 JAR
+mvn clean package -DskipTests
+
+# 5. 構建 jpackage
+mkdir -p jpackage-input
+cp target/jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar jpackage-input/
+
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type app-image \
+  --dest dist-jpackage \
+  --java-options -Xmx2G
+
+# 6. 添加配置文件
+cp config-multipage-false.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+cp config-multipage-true.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+
+# 輸出
+# dist-jpackage/JPEG2PDF-OFD-NoSpring/ (~180 MB)
+```
+
+**使用：**
+
+```bash
+cd dist-jpackage/JPEG2PDF-OFD-NoSpring
+chmod +x JPEG2PDF-OFD-NoSpring
+./JPEG2PDF-OFD-NoSpring config-multipage-false.json
+```
+
+**創建 .deb 安裝包（可選）：**
+
+```bash
+# 創建 .deb 安裝包
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type deb \
+  --dest dist-jpackage \
+  --java-options -Xmx2G \
+  --linux-package-name jpeg2pdf-ofd \
+  --linux-deb-maintainer your-email@example.com \
+  --linux-menu-group "Graphics;OCR" \
+  --linux-shortcut
+
+# 安裝
+sudo dpkg -i dist-jpackage/jpeg2pdf-ofd_*.deb
+```
+
+**文件結構：**
+
+```
+dist-jpackage/JPEG2PDF-OFD-NoSpring/
+├── JPEG2PDF-OFD-NoSpring (可執行文件)
+├── app/                   (應用程序)
+├── runtime/               (JRE runtime)
+├── config-multipage-false.json
+└── config-multipage-true.json
+```
+
+---
+
+#### Linux (CentOS/RHEL/Fedora)
+
+**構建步驟：**
+
+```bash
+# 1. 安裝依賴
+sudo yum install -y java-17-openjdk-devel maven gcc
+
+# 或使用 dnf
+sudo dnf install -y java-17-openjdk-devel maven gcc
+
+# 2. 設置 JAVA_HOME
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+# 3. 構建 JAR
+mvn clean package -DskipTests
+
+# 4. 構建 jpackage
+mkdir -p jpackage-input
+cp target/jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar jpackage-input/
+
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type app-image \
+  --dest dist-jpackage \
+  --java-options -Xmx2G
+
+# 5. 添加配置文件
+cp config-multipage-false.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+cp config-multipage-true.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+```
+
+**創建 .rpm 安裝包（可選）：**
+
+```bash
+# 創建 .rpm 安裝包
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type rpm \
+  --dest dist-jpackage \
+  --java-options -Xmx2G \
+  --linux-package-name jpeg2pdf-ofd \
+  --linux-rpm-license-type MIT \
+  --linux-menu-group "Graphics;OCR" \
+  --linux-shortcut
+
+# 安裝
+sudo rpm -i dist-jpackage/jpeg2pdf-ofd-*.rpm
+```
+
+---
+
+#### 國產 Linux（統信 UOS、麒麟 Kylin 等）
+
+**構建步驟：**
+
+```bash
+# 1. 檢查系統架構
+uname -m
+
+# 2. 根據架構選擇對應的 JDK
+# x86_64: 使用標準 OpenJDK
+# aarch64 (鯤鵬/飛騰): 使用 ARM64 版本 JDK
+# mips64 (龍芯): 使用龍芯版本 JDK
+# sw_64 (申威): 使用申威版本 JDK
+
+# 3. 安裝依賴（根據系統包管理器）
+# Debian 系（UOS、Deepin）
+sudo apt install -y openjdk-17-jdk maven build-essential
+
+# RHEL 系（麒麟）
+sudo yum install -y java-17-openjdk-devel maven gcc
+
+# 4. 設置環境變量
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+# 5. 構建
+mvn clean package -DskipTests
+
+# 6. 創建 jpackage
+mkdir -p jpackage-input
+cp target/jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar jpackage-input/
+
+jpackage \
+  --name JPEG2PDF-OFD-NoSpring \
+  --input jpackage-input \
+  --main-jar jpeg2pdf-ofd-nospring-3.0.0-jar-with-dependencies.jar \
+  --main-class com.ocr.nospring.Main \
+  --type app-image \
+  --dest dist-jpackage \
+  --java-options -Xmx2G
+
+# 7. 添加配置文件
+cp config-multipage-false.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+cp config-multipage-true.json dist-jpackage/JPEG2PDF-OFD-NoSpring/
+```
+
+**注意：**
+- 國產 CPU 架構可能需要從源碼編譯 JDK
+- jpackage 在某些架構上可能不完全支持
+- 建議優先使用 JAR 版本（需要對應架構的 JDK）
 
 ---
 
