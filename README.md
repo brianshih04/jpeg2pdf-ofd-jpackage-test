@@ -410,6 +410,387 @@ OCR 引擎會自動使用多核 CPU。確保：
 
 ---
 
+### ⚠️ 中國國產 Linux 注意事項
+
+使用中國國產 Linux 發行版時，請注意以下重要事項：
+
+---
+
+#### 1️⃣ CPU 架構兼容性
+
+**支持的 CPU 架構：**
+
+| CPU 架構 | 支持狀態 | 代表處理器 | 建議方案 |
+|---------|---------|-----------|---------|
+| **x86_64** | ✅ 完全支持 | Intel、AMD | 推薦使用 jpackage |
+| **aarch64** | ✅ 完全支持 | 鯤鵬 920、飛騰 2000/2500/2000+ | 推薦使用 jpackage |
+| **mips64** | ⚠️ 需測試 | 龍芯 2K/3A/3B | 建議使用 JAR 版本 |
+| **sw_64** | ⚠️ 需測試 | 申威 1610/26010 | 建議使用 JAR 版本 |
+| **loongarch64** | ⚠️ 需測試 | 龍芯 3A5000/3C5000 | 需要龍芯專版 JDK |
+
+**重要說明：**
+
+```
+✅ x86_64 和 aarch64 架構：
+   - 完全兼容標準 OpenJDK
+   - jpackage 功能完整
+   - 可直接使用預編譯版本
+
+⚠️ mips64、sw_64、loongarch64 架構：
+   - 需要廠商提供的專版 JDK
+   - jpackage 可能不完全支持
+   - 建議優先使用 JAR 版本
+```
+
+---
+
+#### 2️⃣ JDK 版本要求
+
+**官方推薦 JDK：**
+
+| 系統 | 推薦 JDK | 下載來源 |
+|------|---------|---------|
+| **統信 UOS** | UOS JDK 17+ | 統信軟件官方源 |
+| **銀河麒麟** | Kylin JDK 17+ | 麒麟軟件官方源 |
+| **中標麒麟** | NeoKylin JDK 17+ | 中標軟件官方源 |
+| **深度 Deepin** | OpenJDK 17+ | Deepin 官方源 |
+| **龍芯系統** | Loongson JDK 17+ | 龍芯中科官網 |
+
+**安裝示例（統信 UOS）：**
+
+```bash
+# 統信 UOS 通常使用 apt
+sudo apt update
+sudo apt install uos-jdk-17
+
+# 設置 JAVA_HOME
+export JAVA_HOME=/usr/lib/jvm/uos-java-17
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
+**安裝示例（銀河麒麟）：**
+
+```bash
+# 銀河麒麟可能使用 yum 或 apt
+sudo yum install kylin-java-17
+# 或
+sudo apt install kylin-jdk-17
+
+# 設置 JAVA_HOME
+export JAVA_HOME=/usr/lib/jvm/kylin-java-17
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
+**⚠️ 重要提示：**
+
+```
+❌ 不要使用非官方 JDK
+   - 可能導致性能問題
+   - 可能有兼容性問題
+   - 可能無法正常運行
+
+✅ 使用系統自帶的應用商店或官方源
+   - 確保兼容性
+   - 獲得廠商支持
+```
+
+---
+
+#### 3️⃣ 依賴庫問題
+
+**常見問題：**
+
+```bash
+# 錯誤：找不到共享庫
+error while loading shared libraries: libXXX.so.1: cannot open shared object file
+
+# 解決：安裝缺失的庫
+sudo apt install libfreetype6-dev  # UOS/Deepin
+sudo yum install freetype-devel    # Kylin
+```
+
+**推薦依賴：**
+
+```bash
+# Ubuntu/Debian 系（UOS、Deepin）
+sudo apt install -y \
+  build-essential \
+  libfreetype6-dev \
+  libfontconfig1-dev \
+  libpng-dev \
+  libjpeg-dev
+
+# RHEL 系（麒麟）
+sudo yum install -y \
+  gcc \
+  gcc-c++ \
+  freetype-devel \
+  fontconfig-devel \
+  libpng-devel \
+  libjpeg-devel
+```
+
+---
+
+#### 4️⃣ 字體支持
+
+**問題：** 國產系統可能缺少中文字體
+
+**解決方案：**
+
+```bash
+# 檢查可用字體
+fc-list :lang=zh
+
+# 安裝中文字體（UOS/Deepin）
+sudo apt install -y fonts-wqy-zenhei fonts-wqy-microhei
+
+# 安裝中文字體（麒麟）
+sudo yum install -y wqy-zenhei-fonts wqy-microhei-fonts
+
+# 或使用系統字體
+# 配置文件中指定字體路徑：
+# /usr/share/fonts/truetype/wqy/wqy-zenhei.ttc
+```
+
+**在配置文件中指定字體：**
+
+```json
+{
+  "ocr": {
+    "language": "chinese_cht"
+  },
+  "font": {
+    "path": "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc"
+  }
+}
+```
+
+---
+
+#### 5️⃣ jpackage 限制
+
+**已知問題：**
+
+```
+⚠️ jpackage 在某些國產架構上可能不支持
+   - mips64、sw_64、loongarch64 需要測試
+   - 建議優先使用 JAR 版本
+
+⚠️ jpackage 生成的安裝包可能無法跨架構使用
+   - x86_64 的 .deb 不能在 aarch64 上安裝
+   - 必須在目標架構上重新構建
+```
+
+**建議方案：**
+
+```
+✅ 優先使用 JAR 版本
+   - 更好的兼容性
+   - 跨架構通用
+   - 只需要對應架構的 JDK
+
+❌ 避免使用 jpackage（除非已測試）
+   - 可能有不兼容問題
+   - 需要特定架構的工具鏈
+```
+
+---
+
+#### 6️⃣ 文件系統特性
+
+**注意事項：**
+
+```bash
+# 某些國產系統使用特殊文件系統
+# 可能有權限問題
+
+# 確保輸出目錄有寫入權限
+chmod -R 755 /path/to/output
+
+# 避免使用特殊字符
+# 某些系統對中文路徑支持不完善
+# 建議使用英文路徑
+```
+
+**推薦路徑：**
+
+```json
+{
+  "input": {
+    "folder": "/opt/ocr/input"    // ✅ 推薦
+    // "folder": "/home/用戶/ocr" // ⚠️ 可能問題
+  },
+  "output": {
+    "folder": "/opt/ocr/output"  // ✅ 推薦
+  }
+}
+```
+
+---
+
+#### 7️⃣ 安全策略
+
+**國產系統安全限制：**
+
+```bash
+# 某些系統默認啟用嚴格的安全策略
+# 可能阻止程序執行
+
+# 統信 UOS
+sudo setenforce 0  # 臨時關閉（測試用）
+# 或添加到白名單
+
+# 銀河麒麟
+sudo chmod +x JPEG2PDF-OFD-NoSpring
+./JPEG2PDF-OFD-NoSpring config.json
+```
+
+**安全建議：**
+
+```
+⚠️ 不要完全關閉安全策略
+   - 只在測試時臨時關閉
+   - 或添加程序到信任列表
+
+✅ 聯繫系統管理員
+   - 獲取適當的權限
+   - 遵循安全規範
+```
+
+---
+
+#### 8️⃣ 性能調優
+
+**國產 CPU 性能特點：**
+
+```bash
+# 鯤鵬 920（aarch64）
+# - 多核性能強
+# - 內存帶寬大
+java -Xmx4G -XX:+UseG1GC -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 飛騰 2000+（aarch64）
+# - 單核性能一般
+# - 多核並行效率高
+java -Xmx4G -XX:ParallelGCThreads=8 -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 龍芯 3A5000（loongarch64）
+# - 性能相對較低
+# - 增加 GC 優化
+java -Xmx4G -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -jar jpeg2pdf-ofd-nospring.jar config.json
+```
+
+**優化建議：**
+
+```bash
+# 通用優化參數
+java \
+  -Xmx4G \
+  -XX:+UseG1GC \
+  -XX:ParallelGCThreads=4 \
+  -XX:ConcGCThreads=2 \
+  -XX:MaxGCPauseMillis=200 \
+  -Djava.awt.headless=true \
+  -jar jpeg2pdf-ofd-nospring.jar config.json
+```
+
+---
+
+#### 9️⃣ 常見問題排查
+
+**問題 1：程序無法啟動**
+
+```bash
+# 檢查 JDK 版本
+java -version  # 應該是 17 或更高
+
+# 檢查架構
+uname -m  # 確認 JDK 架構匹配
+
+# 檢查權限
+chmod +x JPEG2PDF-OFD-NoSpring
+```
+
+**問題 2：OCR 識別失敗**
+
+```bash
+# 檢查模型文件
+ls -la models/
+
+# 檢查內存
+free -h  # 確保至少 4GB 可用
+
+# 檢查 CPU
+lscpu  # 確認指令集支持
+```
+
+**問題 3：PDF/OFD 生成失敗**
+
+```bash
+# 檢查字體
+fc-list :lang=zh
+
+# 檢查磁盤空間
+df -h
+
+# 檢查輸出目錄權限
+ls -la /path/to/output
+```
+
+**問題 4：性能過慢**
+
+```bash
+# 增加 JVM 內存
+java -Xmx8G -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 優化 GC
+java -XX:+UseG1GC -jar jpeg2pdf-ofd-nospring.jar config.json
+
+# 減少並發
+# 在配置中處理較小的批次
+```
+
+---
+
+#### 🔟 獲取技術支持
+
+**官方支持渠道：**
+
+| 系統 | 官方支持 |
+|------|---------|
+| 統信 UOS | https://www.chinauos.com/ |
+| 銀河麒麟 | https://www.kylinos.cn/ |
+| 中標麒麟 | http://www.cs2c.com.cn/ |
+| 深度 Deepin | https://www.deepin.org/ |
+| 龍芯中科 | https://www.loongson.cn/ |
+
+**社區支持：**
+
+```
+- GitHub Issues: https://github.com/brianshih04/jpeg2pdf-ofd-nospring/issues
+- 提供詳細的系統信息：
+  - 系統名稱和版本
+  - CPU 架構
+  - JDK 版本
+  - 錯誤日誌
+```
+
+---
+
+**💡 總結：**
+
+```
+✅ 優先使用 JAR 版本（更好的兼容性）
+✅ 使用系統官方源安裝 JDK
+✅ 確保字體支持
+✅ 注意文件路徑和權限
+✅ 根據 CPU 架構調整 JVM 參數
+⚠️ jpackage 版本需要測試驗證
+```
+
+---
+
 ## 🔧 如何構建
 
 ### 系統需求
