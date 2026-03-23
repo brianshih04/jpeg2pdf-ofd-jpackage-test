@@ -1,0 +1,6 @@
+com\ocr\nospring\Main.class
+com\ocr\nospring\Config.class
+com\ocr\nospring\OcrService.class
+com\ocr\nospring\TextService.class
+com\ocr\nospring\PdfService.class
+com\ocr\nospring\OcrService$TextBlock.class
