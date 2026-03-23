@@ -7,6 +7,14 @@ public class Config {
     
     private String fontPath;
     
+    // 文字層顏色 (RGB)
+    private int textLayerRed = 255;
+    private int textLayerGreen = 255;
+    private int textLayerBlue = 255;
+    
+    // 文字層透明度 (0.0 - 1.0)
+    private double textLayerOpacity = 0.0001;
+    
     public Config() {
         this.fontPath = getDefaultFontPath();
     }
@@ -40,5 +48,72 @@ public class Config {
     
     public String getFontPath() {
         return fontPath;
+    }
+    
+    public void setFontPath(String fontPath) {
+        this.fontPath = fontPath;
+    }
+    
+    public int getTextLayerRed() {
+        return textLayerRed;
+    }
+    
+    public void setTextLayerRed(int textLayerRed) {
+        this.textLayerRed = textLayerRed;
+    }
+    
+    public int getTextLayerGreen() {
+        return textLayerGreen;
+    }
+    
+    public void setTextLayerGreen(int textLayerGreen) {
+        this.textLayerGreen = textLayerGreen;
+    }
+    
+    public int getTextLayerBlue() {
+        return textLayerBlue;
+    }
+    
+    public void setTextLayerBlue(int textLayerBlue) {
+        this.textLayerBlue = textLayerBlue;
+    }
+    
+    public double getTextLayerOpacity() {
+        return textLayerOpacity;
+    }
+    
+    public void setTextLayerOpacity(double textLayerOpacity) {
+        this.textLayerOpacity = textLayerOpacity;
+    }
+    
+    /**
+     * 設定文字層顏色（支持顏色名稱或 RGB）
+     * @param colorName 顏色名稱：white, red, black, blue, green, debug
+     */
+    public void setTextLayerColor(String colorName) {
+        if (colorName == null) return;
+        
+        switch (colorName.toLowerCase()) {
+            case "white":
+                textLayerRed = 255; textLayerGreen = 255; textLayerBlue = 255;
+                break;
+            case "red":
+                textLayerRed = 255; textLayerGreen = 0; textLayerBlue = 0;
+                break;
+            case "black":
+                textLayerRed = 0; textLayerGreen = 0; textLayerBlue = 0;
+                break;
+            case "blue":
+                textLayerRed = 0; textLayerGreen = 0; textLayerBlue = 255;
+                break;
+            case "green":
+                textLayerRed = 0; textLayerGreen = 255; textLayerBlue = 0;
+                break;
+            case "debug":
+                // 調試模式：紅色 + 不透明
+                textLayerRed = 255; textLayerGreen = 0; textLayerBlue = 0;
+                textLayerOpacity = 1.0;
+                break;
+        }
     }
 }

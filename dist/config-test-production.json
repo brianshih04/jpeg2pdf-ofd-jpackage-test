@@ -1,0 +1,17 @@
+{
+    "input": {
+        "folder": "C:/Users/Brian/.openclaw/media/inbound",
+        "pattern": "Brian---808746f8-ce77-493a-8a09-c4223600de12.jpg"
+    },
+    "ocr": {
+        "language": "chinese_cht"
+    },
+    "output": {
+        "folder": "P:/OCR/result-new",
+        "format": "ofd"
+    },
+    "textLayer": {
+        "color": "white",
+        "opacity": 0.0001
+    }
+}

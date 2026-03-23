@@ -51,6 +51,30 @@ public class Main {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> configMap = mapper.readValue(file, Map.class);
             
+            // 讀取文字層配置
+            Map<String, Object> textLayerConfig = (Map<String, Object>) configMap.get("textLayer");
+            if (textLayerConfig != null) {
+                // 顏色設定（支持顏色名稱或 RGB）
+                if (textLayerConfig.containsKey("color")) {
+                    String color = (String) textLayerConfig.get("color");
+                    config.setTextLayerColor(color);
+                }
+                if (textLayerConfig.containsKey("red")) {
+                    config.setTextLayerRed(((Number) textLayerConfig.get("red")).intValue());
+                }
+                if (textLayerConfig.containsKey("green")) {
+                    config.setTextLayerGreen(((Number) textLayerConfig.get("green")).intValue());
+                }
+                if (textLayerConfig.containsKey("blue")) {
+                    config.setTextLayerBlue(((Number) textLayerConfig.get("blue")).intValue());
+                }
+                
+                // 透明度設定
+                if (textLayerConfig.containsKey("opacity")) {
+                    config.setTextLayerOpacity(((Number) textLayerConfig.get("opacity")).doubleValue());
+                }
+            }
+            
             System.out.println("========================================");
             System.out.println("  JPEG2PDF-OFD v" + VERSION);
             System.out.println("========================================");
@@ -62,7 +86,7 @@ public class Main {
             OcrService ocrService = new OcrService();
             PdfService pdfService = new PdfService(config);
             TextService textService = new TextService();
-            OfdService ofdService = new OfdService();
+            OfdService ofdService = new OfdService(config);
             
             // 獲取輸入配置
             Map<String, Object> inputConfig = (Map<String, Object>) configMap.get("input");

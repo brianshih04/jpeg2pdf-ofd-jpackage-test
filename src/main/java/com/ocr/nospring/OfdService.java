@@ -20,6 +20,12 @@ import java.util.List;
  */
 public class OfdService {
     
+    private final Config config;
+    
+    public OfdService(Config config) {
+        this.config = config;
+    }
+    
     /**
      * 生成多頁 OFD
      */
@@ -125,7 +131,7 @@ public class OfdService {
                                 
                                 Span span = new Span(singleChar);
                                 span.setFontSize(fontSizeMm);
-                                span.setColor(255, 255, 255); // 白色
+                                span.setColor(config.getTextLayerRed(), config.getTextLayerGreen(), config.getTextLayerBlue());
                                 
                                 Paragraph p = new Paragraph();
                                 p.add(span);
@@ -139,8 +145,8 @@ public class OfdService {
                                 p.setX(currentX);
                                 p.setY(paragraphY);
                                 
-                                // 極低透明度（可搜索但幾乎看不見）
-                                p.setOpacity(0.0001);
+                                // 從配置讀取透明度
+                                p.setOpacity(config.getTextLayerOpacity());
                                 
                                 vPage.add(p);
                                 
@@ -256,7 +262,7 @@ public class OfdService {
                         
                         Span span = new Span(singleChar);
                         span.setFontSize(fontSizeMm);
-                        span.setColor(255, 255, 255); // 白色
+                        span.setColor(config.getTextLayerRed(), config.getTextLayerGreen(), config.getTextLayerBlue());
                         
                         Paragraph p = new Paragraph();
                         p.add(span);
@@ -270,8 +276,8 @@ public class OfdService {
                         p.setX(currentX);
                         p.setY(paragraphY);
                         
-                        // 極低透明度（可搜索但幾乎看不見）
-                        p.setOpacity(0.0001);
+                        // 從配置讀取透明度
+                        p.setOpacity(config.getTextLayerOpacity());
                         
                         vPage.add(p);
                         
