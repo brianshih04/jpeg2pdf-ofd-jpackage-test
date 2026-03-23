@@ -1,0 +1,13 @@
+{
+    "input": {
+        "folder": "D:/Projects/Sample",
+        "pattern": "Sample.jpg"
+    },
+    "ocr": {
+        "language": "chinese_cht"
+    },
+    "output": {
+        "folder": "D:/Projects/Sample/output_master",
+        "format": "ofd"
+    }
+}

@@ -88,10 +88,10 @@ public class OfdService {
                                 .deriveFont(fontSizePt);
                             java.awt.font.FontRenderContext frc = new java.awt.font.FontRenderContext(null, true, true);
                             
-                            // 5. Y 軸使用精確公式
+                            // 5. Y 軸使用精確公式（往上移動 0.1 字高）
                             double ascentPt = awtFont.getLineMetrics(text, frc).getAscent();
                             double ascentMm = ascentPt * 25.4 / 72.0;
-                            double paragraphY = (ocrY + (ocrH * 0.72)) - ascentMm;
+                            double paragraphY = (ocrY + (ocrH * 0.72)) - ascentMm - (ocrH * 0.1);
                             
                             // 6. 終極算法：逐字符絕對定位
                             double[] charWidthsMm = new double[text.length()];
@@ -139,8 +139,8 @@ public class OfdService {
                                 p.setX(currentX);
                                 p.setY(paragraphY);
                                 
-                                // 1% 透明度（WPS 兼容）
-                                p.setOpacity(0.01);
+                                // 極低透明度（可搜索但幾乎看不見）
+                                p.setOpacity(0.0001);
                                 
                                 vPage.add(p);
                                 
@@ -219,10 +219,10 @@ public class OfdService {
                         .deriveFont(fontSizePt);
                     java.awt.font.FontRenderContext frc = new java.awt.font.FontRenderContext(null, true, true);
                     
-                    // 5. Y 軸使用精確公式
+                    // 5. Y 軸使用精確公式（往上移動 0.1 字高）
                     double ascentPt = awtFont.getLineMetrics(text, frc).getAscent();
                     double ascentMm = ascentPt * 25.4 / 72.0;
-                    double paragraphY = (ocrY + (ocrH * 0.72)) - ascentMm;
+                    double paragraphY = (ocrY + (ocrH * 0.72)) - ascentMm - (ocrH * 0.1);
                     
                     // 6. 終極算法：逐字符絕對定位
                     double[] charWidthsMm = new double[text.length()];
@@ -270,8 +270,8 @@ public class OfdService {
                         p.setX(currentX);
                         p.setY(paragraphY);
                         
-                        // 1% 透明度（WPS 兼容）
-                        p.setOpacity(0.01);
+                        // 極低透明度（可搜索但幾乎看不見）
+                        p.setOpacity(0.0001);
                         
                         vPage.add(p);
                         
