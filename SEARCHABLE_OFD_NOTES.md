@@ -103,6 +103,58 @@ float fontSizePt = (float) (fontSizeMm * 72.0 / 25.4);
   - `Paragraph`: 段落容器
   - `Img`: 圖片對象
 
+## JSON 配置
+
+### textLayer 配置（文字層設置）
+
+```json
+{
+  "textLayer": {
+    "color": "white",    // 顏色名稱：white/red/black/blue/green/debug
+    "opacity": 0.0001    // 透明度 (0.0 - 1.0)
+  }
+}
+```
+
+### 支持的顏色名稱
+- `"white"` - 白色（默認，生產環境）
+- `"red"` - 紅色
+- `"black"` - 黑色
+- `"blue"` - 藍色
+- `"green"` - 綠色
+- `"debug"` - **調試模式**：紅色 + 不透明（opacity=1.0）
+
+### 自定義 RGB
+```json
+{
+  "textLayer": {
+    "red": 128,
+    "green": 128,
+    "blue": 128,
+    "opacity": 0.5
+  }
+}
+```
+
+### 調試配置示例
+```json
+{
+  "textLayer": {
+    "color": "debug"    // 紅色、不透明，方便觀察文字定位
+  }
+}
+```
+
+### 生產配置示例
+```json
+{
+  "textLayer": {
+    "color": "white",
+    "opacity": 0.0001   // 極低透明度，可搜索但幾乎看不見
+  }
+}
+```
+
 ## 常見問題
 
 ### Q1: WPS 無法搜索文字？
