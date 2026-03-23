@@ -8,7 +8,7 @@
 
 - ✅ **無 Spring Boot** - 純 Java SE 實現
 - ✅ **完整功能** - OCR + PDF + TXT + OFD
-- ✅ **多種分發** - JAR、jpackage、Native Image
+- ✅ **多種分發** - JAR、jpackage
 - ✅ **跨平台** - Windows、macOS、Linux
 - ✅ **80+ 語言** - 支持繁體/簡體中文、英文、日文等
 
