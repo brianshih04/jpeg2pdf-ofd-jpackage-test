@@ -1,0 +1,43 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": ".*\\.json$"
+      },
+      {
+        "pattern": ".*\\.properties$"
+      },
+      {
+        "pattern": ".*\\.xml$"
+      },
+      {
+        "pattern": "models/.*"
+      },
+      {
+        "pattern": ".*\\.onnx$"
+      },
+      {
+        "pattern": ".*\\.txt$"
+      },
+      {
+        "pattern": ".*\\.dll$"
+      },
+      {
+        "pattern": ".*\\.so$"
+      },
+      {
+        "pattern": ".*\\.dylib$"
+      }
+    ]
+  },
+  "bundles": [
+    {
+      "name": "ocr",
+      "locales": [
+        "en",
+        "zh-CN",
+        "zh-TW"
+      ]
+    }
+  ]
+}
